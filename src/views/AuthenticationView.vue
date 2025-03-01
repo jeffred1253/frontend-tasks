@@ -22,11 +22,11 @@
                         password: this.password
                     })
                         .then(res => {
-                            localStorage.setItem("token", res.data.token);
+                            sessionStorage.setItem("token", res.data.token);
                             if (res.status == 200) {
                                 router.push("/myTasks");
                             }
-                            console.log(`${localStorage.getItem("token")}`);
+                            console.log(`${sessionStorage.getItem("token")}`);
                         })
                         .catch(err => console.log(err));
                 } catch (error) {
@@ -48,11 +48,11 @@
                         password: this.password
                     })
                         .then(res => {
-                            localStorage.setItem("token", res.data.token);
+                            sessionStorage.setItem("token", res.data.token);
                             if (res.status == 200) {
                                 router.push("/myTasks");
                             }
-                            console.log(`${localStorage.getItem("token")}`);
+                            console.log(`${sessionStorage.getItem("token")}`);
                         })
                         .catch(err => console.log(err));
                 } catch (error) {
