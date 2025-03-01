@@ -82,36 +82,56 @@
 </script>
 
 <template>
-    <h1>Liste des tâches</h1>
-    <input v-model="searchKey" type="search" placeholder="Recherche..." />
-    <select v-model="statutKey">
-        <option value="0">Toutes</option>
-        <option value="1">En attente</option>
-        <option value="2">En cours</option>
-        <option value="3">Terminé</option>
-    </select>
-    <table>
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Date d'échéance</th>
-                <th>Statut</th>
-                <th colspan="2">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="task in filteredTasks" :key="task.id">
-                <td>{{ task.titre }}</td>
-                <td>{{ task.description }}</td>
-                <td>{{ task.echeance }}</td>
-                <td>{{ task.statut }}</td>
-                <td><button>Modifier</button></td>
-                <td><button @click="confirmDelete(task)">Supprimer</button></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="p-6 max-w-4xl mx-auto bg-white shadow-md rounded-lg">
+        <h1 class="text-2xl font-semibold text-center mb-4">Liste des tâches</h1>
+        
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-4">
+                <input v-model="searchKey" type="search" placeholder="Recherche..."
+                    class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                
+                <select v-model="statutKey" class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="0">Toutes</option>
+                    <option value="1">En attente</option>
+                    <option value="2">En cours</option>
+                    <option value="3">Terminé</option>
+                </select>
+            </div>
+            <router-link :to="`/newTask`">
+                <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition">Ajouter</button>
+            </router-link>
+        </div>
+        
+        <table class="w-full border-collapse border border-gray-300 shadow-sm">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="p-3 border border-gray-300">Titre</th>
+                    <th class="p-3 border border-gray-300">Description</th>
+                    <th class="p-3 border border-gray-300">Date d'échéance</th>
+                    <th class="p-3 border border-gray-300">Statut</th>
+                    <th colspan="2" class="p-3 border border-gray-300">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="task in filteredTasks" :key="task.id" class="text-center hover:bg-gray-50 transition">
+                    <td class="p-3 border border-gray-300">{{ task.titre }}</td>
+                    <td class="p-3 border border-gray-300">{{ task.description }}</td>
+                    <td class="p-3 border border-gray-300">{{ task.echeance }}</td>
+                    <td class="p-3 border border-gray-300">{{ task.statut }}</td>
+                    <td class="p-3 border border-gray-300">
+                        <router-link :to="`/updateTask/${task.id}`">
+                            <button class="bg-yellow-500 text-white px-4 py-1 rounded-md hover:bg-yellow-600 transition">Modifier</button>
+                        </router-link>
+                    </td>
+                    <td class="p-3 border border-gray-300">
+                        <button @click="confirmDelete(task)" class="bg-red-500 text-white px-4 py-1 rounded-md hover:bg-red-600 transition">Supprimer</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </template>
+
 
 <style scoped>
 
