@@ -11,13 +11,17 @@
             }
         },
         props: {
-            taskid: Number
+            taskId: Number
+        },
+        mounted() {
+            if (this.taskId) {
+                this.task()
+            }
         },
         methods: {
             // Insertion d'une nouvelle tâche
             insert() {
                 try {
-                    console.log(taskid)
                     apiClient.post('/addTask', {
                         titre: this.titre,
                         description: this.description,
@@ -37,7 +41,7 @@
             // Modification d'une tâche
             update() {
                 try {
-                    apiClient.post('/updateTask/' + this.taskid, {
+                    apiClient.post('/updateTask/' + this.taskId, {
                         titre: this.titre,
                         description: this.description,
                         echeance: this.echeance,
@@ -52,6 +56,21 @@
                 } catch (error) {
                     console.error("Erreur lors de la mise à jour d'une tâche : " + error)
                 }
+            },
+            // Récupération de la tâche à modifier
+            task() {
+                try {
+                    apiClient.get('/task/' + this.taskId)
+                        .then(res => {
+                            this.titre = res.data.titre
+                            this.description = res.data.description
+                            this.echeance = res.data.echeance
+                            this.statut = res.data.statut
+                        })
+                        .catch(err => console.log(err));
+                } catch (error) {
+                    console.error("Erreur de récupération de la tâche à modifier : " + error)
+                }
             }
         }
     }
@@ -61,10 +80,10 @@
     <div class="flex items-center justify-center min-h-screen bg-gray-100 p-6">
         <div class="w-full max-w-lg bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-semibold text-center mb-4">
-                {{ taskid ? "Modifier la tâche" : "Créer une tâche" }}
+                {{ taskId ? "Modifier la tâche" : "Créer une tâche" }}
             </h2>
-            <form @submit.prevent="!taskid ? insert() : insert()" class="space-y-4">
-                <input type="hidden" name="id" v-if="taskid" :value="taskid">
+            <form @submit.prevent="taskId ? update() : insert()" class="space-y-4">
+                <input type="hidden" name="id" v-if="taskId" :value="taskId">
                 
                 <div>
                     <label for="titre" class="block text-sm font-medium text-gray-700">Titre</label>
@@ -95,7 +114,7 @@
                 </div>
                 
                 <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
-                    {{ taskid ? "Mettre à jour" : "Créer" }}
+                    {{ taskId ? "Mettre à jour" : "Créer" }}
                 </button>
             </form>
         </div>

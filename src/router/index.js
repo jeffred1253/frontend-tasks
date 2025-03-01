@@ -10,7 +10,7 @@ const routes = [
   { path: "/register", name: "Register", component: AuthenticationView, props: {isRegistration: true} },
   { path: "/myTasks", name: "Tasks", component: TasksTable, meta: {requiresAuth: true} },
   { path: "/newTask", name: "NewTask", component: TasksForm },
-  { path: "/updateTask/:taskId", name: "UpdateTask", component: TasksForm, props: true },
+  { path: "/updateTask/:taskId", name: "UpdateTask", component: TasksForm, props: (route) => ({ taskId: route.params.taskId }) }
   //{ path: "/:pathMatch(.*)*", name: "NotFound", component: NotFoundPage },
 ];
 
