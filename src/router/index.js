@@ -5,12 +5,12 @@ import TasksForm from "../views/TasksFormsView.vue";
 import DashboardView from "../views/DashboardView.vue";
 
 const routes = [
-  { path: "/", name: "Dashboard", component: DashboardView },
+  { path: "/", name: "Dashboard", component: DashboardView, meta: {requiresAuth: true} },
   { path: "/login", name: "Login", component: AuthenticationView },
   { path: "/register", name: "Register", component: AuthenticationView, props: {isRegistration: true} },
   { path: "/myTasks", name: "Tasks", component: TasksTable, meta: {requiresAuth: true} },
-  { path: "/newTask", name: "NewTask", component: TasksForm },
-  { path: "/updateTask/:taskId", name: "UpdateTask", component: TasksForm, props: (route) => ({ taskId: route.params.taskId }) }
+  { path: "/newTask", name: "NewTask", component: TasksForm, meta: {requiresAuth: true} },
+  { path: "/updateTask/:taskId", name: "UpdateTask", component: TasksForm, props: (route) => ({ taskId: route.params.taskId }), meta: {requiresAuth: true} }
   //{ path: "/:pathMatch(.*)*", name: "NotFound", component: NotFoundPage },
 ];
 
